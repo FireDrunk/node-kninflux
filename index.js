@@ -43,7 +43,7 @@ function on_knx_connected() {
   if (DEBUG) console.log("[DEBUG] Registered Environment");
 
   // Start the read loop
-  knx.start_reading(global_settings.interval);
+  knx.start_reading(global_settings.interval * 3600);
   if (DEBUG) console.log("[DEBUG] Started reading loop");
 }
 
