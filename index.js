@@ -18,18 +18,19 @@ try {
   if (DEBUG) console.log("[DEBUG] Settings: %j", settings);
 }
 catch (err) {
-  if (DEBUG) console.error("[ERROR] Error parsing settings.json!");
+  console.error("[ERROR] Error parsing settings.json!");
 }
-
 
 // Environment
 var environment = JSON.parse(fs.readFileSync('environment.json', 'utf8'));
 if (DEBUG) console.log("[DEBUG] Environment: %j", environment);
 
 // Events
-function on_knx_data_point_received(name, address, value) {
+function on_knx_data_point_received(name, src, value) {
   if (DEBUG) console.log("[DEBUG] KNX Data point received, (%j, %j, %j)", name, address, value);
-  influx.write
+
+  //TODO: Rework promise return
+  influx.write_data_point(name, src, value);
 }
 
 // Callbacks
