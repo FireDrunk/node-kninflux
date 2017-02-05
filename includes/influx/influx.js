@@ -15,7 +15,7 @@ exports.register_callback = function(name, func) {
 exports.write_data_point = function(name,src,value) {
   influx.writePoints([
     {
-      measurement: settings.influx_db_measurement_name || 'knx_values',
+      measurement: global_settings.influx_db_measurement_name || 'knx_values',
       tags: {name: name},
       fields: {knx_address: src, knx_value: value},
     }
