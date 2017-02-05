@@ -1,3 +1,6 @@
+//Strict mode
+"use strict";
+
 //Debug mode
 const DEBUG = true;
 
