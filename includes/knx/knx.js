@@ -4,31 +4,29 @@ var datapoints = [];
 
 // Module Requires
 var knx = require('knx');
-
-// Setup Connection
-var connection = new knx.Connection( {
-  ipAddr: '192.168.4.122', // ip address of the KNX router or interface
-  ipPort: 3671, // the UDP port of the router or interface
-  physAddr: '15.15.15', // the KNX physical address we want to use
-  debug: false,
-  //debug: true, // print lots of debug output to the console
-  manualConnect: true, // do not automatically connect, but use connection.Connect() to establish connection
-  minimumDelay: 10, // wait at least 10 millisec between each datagram
-  handlers: {
-    connected: function() {
-      if ("on_connected" in callbacks) {
-        callbacks['on_connected']();
-      }
-      else {
-        console.log("[ERROR] No callback registered for on_connected!");
-      }
-    }
-  }
-});
+var connection = '';
 
 // Exports
-exports.connect = function() {
-  connection.Connect();
+exports.connect = function(settings) {
+  connection = new knx.Connection( {
+    ipAddr: settings.knx_gateway, // ip address of the KNX router or interface
+    ipPort: settings.knx_port, // the UDP port of the router or interface
+    physAddr: settings.knx_physical_address, // the KNX physical address we want to use
+    debug: false,
+    //debug: true, // print lots of debug output to the console
+    manualConnect: false, // do not automatically connect, but use connection.Connect() to establish connection
+    minimumDelay: 10, // wait at least 10 millisec between each datagram
+    handlers: {
+      connected: function() {
+        if ("on_connected" in callbacks) {
+          callbacks['on_connected']();
+        }
+        else {
+          console.log("[ERROR] No callback registered for on_connected!");
+        }
+      }
+    }
+  });
 }
 
 exports.register_callback = function(name, func) {

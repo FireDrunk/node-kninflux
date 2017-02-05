@@ -11,10 +11,11 @@ var fs = require('fs');
 //Custom includes
 var knx = require('./includes/knx/knx');
 var influx = require('./includes/influx/influx');
+var global_settings = '';
 
 // Settings
 try {
-  var settings = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
+  global_settings = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
   if (DEBUG) console.log("[DEBUG] Settings: %j", settings);
 }
 catch (err) {
@@ -52,8 +53,9 @@ knx.register_callback("on_connected", on_knx_connected);
 
 influx.register_callback("on_connected", function(){
   if (DEBUG) console.log("[DEBUG] Connected to Influx");
+
   // Connect to KNX
-  knx.connect();
+  knx.connect(global_settings);
 });
 
 // Connect to Influx
