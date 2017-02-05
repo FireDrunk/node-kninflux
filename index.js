@@ -17,8 +17,15 @@ function on_data_point_received(name, address, value) {
   if (DEBUG) console.log("KNX Data point received, (%j, %j, %j)", name, address, value);
 }
 
+// Callbacks
 function on_connected() {
-  knx.register_callback("on_data_point_received", on_data_point_received)
+  if (DEBUG) console.log("[DEBUG] Connected to KNX");
+  knx.register_environment(envrionment);
+  if (DEBUG) console.log("[DEBUG] Registered Environment");
+  knx.start_reading(1000);
+  if (DEBUG) console.log("[DEBUG] Started reading loop");
 }
 
+//Register Callbacks
+knx.register_callback("on_data_point_received", on_data_point_received)
 knx.register_callback("on_connected", on_connected);
