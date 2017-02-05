@@ -17,11 +17,11 @@ var connection = new knx.Connection( {
   handlers: {
     connected: function() {
       if ("on_connected" in callbacks) {
-        callbacks['on_connected']();
+        //callbacks['on_connected']();
       }
-      else (
+      else {
         console.log("No callback registered for on_connected!");
-      )
+      }
     }
   }
 });

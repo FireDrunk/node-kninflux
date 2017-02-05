@@ -6,7 +6,7 @@ var util = require('util');
 var fs = require('fs');
 
 //Custom includes
-var knx = require('includes/knx/knx');
+var knx = require('./includes/knx/knx');
 
 // Environment
 var environment = JSON.parse(fs.readFileSync('environment.json', 'utf8'));
