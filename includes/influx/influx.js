@@ -1,14 +1,14 @@
 const DEBUG = true;
 
 //Includes
-var influx_module = require('influx');
-const FieldType = influx_module.FieldType
+const Influx = require('influx');
+const FieldType = Influx.FieldType
 
 var influx = '';
 
 exports.connect = function(settings) {
   // Create influx db
-  influx.getDatabaseNames()
+  Influx.getDatabaseNames()
     .then(names => {
       if (!names.includes(influx_db_name)) {
         if (DEBUG) console.log('[DEBUG] Creating database: %j', influx_db_name);

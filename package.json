@@ -9,8 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "influx": "^5.0.0-alpha.4",
     "knx": "^2.0.3",
-    "knx-dpt": "0.0.3",
-    "node-influx": "^1.0.2"
+    "knx-dpt": "0.0.3"
   }
 }
