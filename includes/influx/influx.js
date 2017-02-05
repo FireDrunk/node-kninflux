@@ -12,13 +12,16 @@ exports.register_callback = function(name, func) {
 };
 
 exports.connect = function(settings) {
+  // Print settings
+  if (DEBUG) console.log("[DEBUG] Settings: %j", settings);
   // Connect
   influx = new Influx.InfluxDB({
-	  host: settings.influx_db_host || '127.0.0.1',
-	  database: settings.influx_db_name || 'knx_db',
-  	schema: [
-  	  {
-    		measurement: settings.influx_db_table_name || 'knx_values',
+    host: settings.influx_db_host,
+    port: settings.influx_db_port,
+    database: settings.influx_db_name || 'knx_db',
+    schema: [
+    {
+      measurement: settings.influx_db_table_name || 'knx_values',
     		fields: {
     			knx_address: Influx.FieldType.STRING,
     			knx_value: Influx.FieldType.FLOAT
@@ -47,7 +50,7 @@ exports.connect = function(settings) {
         if (DEBUG) console.log('[DEBUG] Database found, not recreating.');
       }
     })
-    .catch(err => {
+    .catch(function(err){
       console.error('[ERROR] Error creating Influx database: %j', err);
     });
 };
