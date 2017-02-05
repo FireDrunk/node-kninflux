@@ -6,6 +6,7 @@ const FieldType = Influx.FieldType
 
 var influx = '';
 var callbacks = [];
+var global_settings = '';
 
 exports.register_callback = function(name, func) {
   callbacks[name] = func;
@@ -27,7 +28,7 @@ exports.write_data_point = function(name,src,value) {
 
 exports.connect = function(settings) {
   // Print settings
-  if (DEBUG) console.log("[DEBUG] Settings: %j", settings);
+  if (DEBUG) console.log("[DEBUG] Received Settings: %j", settings);
 
   // Connect
   influx = new Influx.InfluxDB({
@@ -69,4 +70,6 @@ exports.connect = function(settings) {
     .catch(function(err){
       console.error('[ERROR] Error creating Influx database: %j', err);
     });
+
+    global_settings = settings;
 };
