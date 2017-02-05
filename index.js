@@ -16,10 +16,12 @@ var global_settings = '';
 // Settings
 try {
   global_settings = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
-  if (DEBUG) console.log("[DEBUG] Settings: %j", settings);
+  if (DEBUG) console.log("[DEBUG] Settings: %j", global_settings);
 }
 catch (err) {
   console.error("[ERROR] Error parsing settings.json!");
+  console.error(err);
+  process.exit(1);
 }
 
 // Environment
@@ -43,7 +45,7 @@ function on_knx_connected() {
   if (DEBUG) console.log("[DEBUG] Registered Environment");
 
   // Start the read loop
-  knx.start_reading(global_settings.interval * 3600);
+  knx.start_reading(global_settings.interval || 30);
   if (DEBUG) console.log("[DEBUG] Started reading loop");
 }
 

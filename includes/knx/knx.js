@@ -53,5 +53,5 @@ exports.start_reading = function(timeout) {
           }
         });
       }
-    }, timeout);
+    }, timeout*1000);
 }
