@@ -7,6 +7,11 @@ var fs = require('fs');
 
 //Custom includes
 var knx = require('./includes/knx/knx');
+var influx = required('./includes/influx/influx);
+
+// Settings
+var settings = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
+if (DEBUG) console.log("Settings: %j", settings);
 
 // Environment
 var environment = JSON.parse(fs.readFileSync('environment.json', 'utf8'));
@@ -20,7 +25,7 @@ function on_data_point_received(name, address, value) {
 // Callbacks
 function on_connected() {
   if (DEBUG) console.log("[DEBUG] Connected to KNX");
-  knx.register_environment(envrionment);
+  knx.register_environment(environment);
   if (DEBUG) console.log("[DEBUG] Registered Environment");
   knx.start_reading(1000);
   if (DEBUG) console.log("[DEBUG] Started reading loop");
@@ -29,3 +34,9 @@ function on_connected() {
 //Register Callbacks
 knx.register_callback("on_data_point_received", on_data_point_received)
 knx.register_callback("on_connected", on_connected);
+
+// Connect to Influx
+// influx.connect();
+
+// Connect to KNX
+knx.connect();

@@ -47,7 +47,7 @@ exports.start_reading = function(timeout) {
     var timer = setInterval(function() {
       for (var i = 0; i < datapoints.length; i++) {
         datapoints[i].read( (src, value) =>{
-          if ("on_data_point_error" in callbacks) {
+          if ("on_data_point_received" in callbacks) {
             callbacks["on_data_point_received"]("test_name", src, value);
           }
           else {
