@@ -35,18 +35,21 @@ exports.connect = function(settings) {
   // Create influx db
   influx.getDatabaseNames()
     .then(names => {
+      // Check if we need to create the database
       if (!names.includes(settings.influx_db_name || "knx_db")) {
         if (DEBUG) console.log('[DEBUG] Creating database: %j', settings.influx_db_name || "knx_db");
         influx.createDatabase(settings.influx_db_name);
-        if ("on_connected" in callbacks) {
-          callbacks["on_connected"]();
-        }
-        else {
-          console.log('[ERROR] No callback registered vor on_connected!');
-        }
       }
       else {
         if (DEBUG) console.log('[DEBUG] Database found, not recreating.');
+      }
+
+      // Call callback
+      if ("on_connected" in callbacks) {
+        callbacks["on_connected"]();
+      }
+      else {
+        console.log('[ERROR] No callback registered vor on_connected!');
       }
     })
     .catch(function(err){
