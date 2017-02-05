@@ -35,9 +35,9 @@ exports.connect = function(settings) {
   // Create influx db
   influx.getDatabaseNames()
     .then(names => {
-      if (!names.includes(influx_db_name)) {
-        if (DEBUG) console.log('[DEBUG] Creating database: %j', influx_db_name);
-        influx.createDatabase(influx_db_name);
+      if (!names.includes(settings.influx_db_name || "knx_db")) {
+        if (DEBUG) console.log('[DEBUG] Creating database: %j', settings.influx_db_name || "knx_db");
+        influx.createDatabase(settings.influx_db_name);
         if ("on_connected" in callbacks) {
           callbacks["on_connected"]();
         }
