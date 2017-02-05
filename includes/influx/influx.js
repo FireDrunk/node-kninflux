@@ -7,9 +7,9 @@ const FieldType = Influx.FieldType
 var influx = '';
 var callbacks = [];
 
-exports.register_callback(name, func) {
+exports.register_callback = function(name, func) {
   callbacks[name] = func;
-}
+};
 
 exports.connect = function(settings) {
   // Connect
