@@ -27,7 +27,7 @@ if (DEBUG) console.log("[DEBUG] Environment: %j", environment);
 
 // Events
 function on_knx_data_point_received(name, src, value) {
-  if (DEBUG) console.log("[DEBUG] KNX Data point received, (%j, %j, %j)", name, address, value);
+  if (DEBUG) console.log("[DEBUG] KNX Data point received, (%j, %j, %j)", name, src, value);
 
   //TODO: Rework promise return
   influx.write_data_point(name, src, value);
