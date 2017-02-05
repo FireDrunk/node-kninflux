@@ -7,7 +7,7 @@ var fs = require('fs');
 
 //Custom includes
 var knx = require('./includes/knx/knx');
-var influx = required('./includes/influx/influx');
+var influx = require('./includes/influx/influx');
 
 // Settings
 var settings = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
