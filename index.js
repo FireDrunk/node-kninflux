@@ -7,7 +7,7 @@ var fs = require('fs');
 
 //Custom includes
 var knx = require('./includes/knx/knx');
-var influx = required('./includes/influx/influx);
+var influx = required('./includes/influx/influx');
 
 // Settings
 var settings = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
@@ -36,7 +36,7 @@ knx.register_callback("on_data_point_received", on_data_point_received)
 knx.register_callback("on_connected", on_connected);
 
 // Connect to Influx
-// influx.connect();
+influx.connect(settings);
 
 // Connect to KNX
 knx.connect();
