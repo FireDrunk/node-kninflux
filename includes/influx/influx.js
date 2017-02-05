@@ -7,21 +7,6 @@ const FieldType = Influx.FieldType
 var influx = '';
 
 exports.connect = function(settings) {
-  // Create influx db
-  Influx.getDatabaseNames()
-    .then(names => {
-      if (!names.includes(influx_db_name)) {
-        if (DEBUG) console.log('[DEBUG] Creating database: %j', influx_db_name);
-        return influx.createDatabase(influx_db_name);
-      }
-      else {
-        if (DEBUG) console.log('[DEBUG] Database found, not recreating.');
-      }
-    })
-    .catch(err => {
-      console.error('[ERROR] Error creating Influx database!');
-    });
-
   // Connect
   influx = new Influx.InfluxDB({
 	  host: settings.influx_db_host || '127.0.0.1',
@@ -40,6 +25,21 @@ exports.connect = function(settings) {
   	]
   });
 
-  if(DEBUG) console.log("[DEBUG] Connected to Influx.");
+  // Create influx db
+  influx.getDatabaseNames()
+    .then(names => {
+      if (!names.includes(influx_db_name)) {
+        if (DEBUG) console.log('[DEBUG] Creating database: %j', influx_db_name);
+        return influx.createDatabase(influx_db_name);
+      }
+      else {
+        if (DEBUG) console.log('[DEBUG] Database found, not recreating.');
+      }
+    })
+    .catch(err => {
+      console.error('[ERROR] Error creating Influx database!');
+    });
+
+  if(DEBUG) console.log("[DEBUG] Connected to Influx (and Database).");
 
 };
