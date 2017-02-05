@@ -53,5 +53,5 @@ exports.start_reading = function(timeout) {
           }
         });
       }
-    }, timeout*1000);
+    }, timeout*1000); // Timeout is passed in Milliseconds
 }
