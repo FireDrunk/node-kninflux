@@ -14,15 +14,15 @@ var influx = require('./includes/influx/influx');
 
 // Settings
 var settings = JSON.parse(fs.readFileSync('settings.json', 'utf8'));
-if (DEBUG) console.log("Settings: %j", settings);
+if (DEBUG) console.log("[DEBUG] Settings: %j", settings);
 
 // Environment
 var environment = JSON.parse(fs.readFileSync('environment.json', 'utf8'));
-if (DEBUG) console.log("Environment: %j", environment);
+if (DEBUG) console.log("[DEBUG] Environment: %j", environment);
 
 // Events
 function on_knx_data_point_received(name, address, value) {
-  if (DEBUG) console.log("KNX Data point received, (%j, %j, %j)", name, address, value);
+  if (DEBUG) console.log("[DEBUG] KNX Data point received, (%j, %j, %j)", name, address, value);
 }
 
 // Callbacks
