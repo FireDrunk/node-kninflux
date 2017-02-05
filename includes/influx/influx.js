@@ -5,6 +5,11 @@ const Influx = require('influx');
 const FieldType = Influx.FieldType
 
 var influx = '';
+var callbacks = [];
+
+exports.register_callback(name, func) {
+  callbacks[name] = func;
+}
 
 exports.connect = function(settings) {
   // Connect
@@ -30,16 +35,19 @@ exports.connect = function(settings) {
     .then(names => {
       if (!names.includes(influx_db_name)) {
         if (DEBUG) console.log('[DEBUG] Creating database: %j', influx_db_name);
-        return influx.createDatabase(influx_db_name);
+        influx.createDatabase(influx_db_name);
+        if ("on_connected" in callbacks) {
+          callbacks["on_connected"]();
+        }
+        else {
+          console.log('[ERROR] No callback registered vor on_connected!');
+        }
       }
       else {
         if (DEBUG) console.log('[DEBUG] Database found, not recreating.');
       }
     })
     .catch(err => {
-      console.error('[ERROR] Error creating Influx database!');
+      console.error('[ERROR] Error creating Influx database: %j', err);
     });
-
-  if(DEBUG) console.log("[DEBUG] Connected to Influx (and Database).");
-
 };
