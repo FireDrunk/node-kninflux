@@ -59,4 +59,4 @@ influx.register_callback("on_connected", function(){
 });
 
 // Connect to Influx
-influx.connect(settings);
+influx.connect(global_settings);
