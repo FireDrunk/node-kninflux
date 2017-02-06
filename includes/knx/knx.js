@@ -51,17 +51,9 @@ exports.start_reading = function(timeout) {
   var timer = setInterval(function() {
     for(var i = 0; i < datapoints.length; i++) {
       var datapoint = datapoints[i];
-      datapoints[i].datapoint.read( (src,value) => {
+      datapoints[i].datapoint.read( (src,value, ga) => {
         if ("on_data_point_received" in callbacks) {
-          //We need to search for the name, because we are inside an anonymous function that gets called Async.
-          for(var i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].address == src) {
-              var name = datapoints[i].name;
-              callbacks["on_data_point_received"](name, src, value);
-              return; // Stop processing after calling the callback
-            }
-          }
-          if (DEBUG) console.log("[DEBUG] Could not find Pretty Name for Address (%J)", src);
+          callbacks["on_data_point_received"](name, value, ga);
         }
         else {
           console.log("[ERROR] No callback registered for on_data_point_received!");
