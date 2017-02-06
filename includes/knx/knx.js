@@ -41,7 +41,7 @@ exports.register_environment = function(environment) {
     var knx_datapoint = new knx.Datapoint({ga: environment.devices[i].address, dpt: environment.devices[i].dpt}, connection);
     var datapoint = {
       name: environment.devices[i].name,
-      address: envrionment.devices[i].address,
+      address: environment.devices[i].address,
       datapoint: knx_datapoint
     }
     datapoints.push(datapoint);
