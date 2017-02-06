@@ -47,6 +47,7 @@ exports.register_environment = function(environment) {
 exports.start_reading = function(timeout) {
   var timer = setInterval(function() {
     for(name in Object.keys(datapoints)) {
+      if (DEBUG) console.log("[DEBUG] Retrieving value for: %j", name);
       datapoints[name].read( (name,src,value => {
         if ("on_data_point_received" in callbacks) {
           callbacks["on_data_point_received"](name, src, value);
