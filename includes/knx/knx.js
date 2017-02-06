@@ -55,7 +55,7 @@ exports.start_reading = function(timeout) {
         if ("on_data_point_received" in callbacks) {
           //We need to search for the name, because we are inside an anonymous function that gets called Async.
           for(var i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].address = src) {
+            if (datapoints[i].address == src) {
               callbacks["on_data_point_received"](datapoints[i].name, src, value);
               return; // Stop processing after calling the callback
             }
