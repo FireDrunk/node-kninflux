@@ -52,11 +52,11 @@ exports.start_reading = function(timeout) {
   var timer = setInterval(function() {
     for(var i = 0; i < datapoints.length; i++) {
       var datapoint = datapoints[i];
-      datapoints[i].datapoint.read( (src,value, ga) => {
+      datapoints[i].datapoint.read( (src, value, ga) => {
         if ("on_data_point_received" in callbacks) {
           for (var i = 0; i < datapoints.length; i++) {
             if (datapoints[i].address == ga) {
-              callbacks["on_data_point_received"](datapoints[i].name, value, src);
+              callbacks["on_data_point_received"](datapoints[i].name, value);
             }
           }
           console.error("[ERROR] No registered sensor found for response!");
@@ -65,6 +65,7 @@ exports.start_reading = function(timeout) {
           console.error("[ERROR] No callback registered for on_data_point_received!");
         }
       });
+      if (DEBUG) console.log("[DEBUG] Started read for %j", datapoint.name);
     }
   }, timeout*1000); // Timeout is passed in Milliseconds
 }
