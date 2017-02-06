@@ -53,14 +53,14 @@ exports.start_reading = function(timeout) {
       var datapoint = datapoints[i];
       if (DEBUG) console.log("[DEBUG] Retrieving value for: %j", datapoint.name);
 
-      datapoints[i].datapoint.read( (src,value => {
+      datapoints[i].datapoint.read( (src,value) => {
         if ("on_data_point_received" in callbacks) {
           callbacks["on_data_point_received"](datapoint.name, src, value);
         }
         else {
           console.log("[ERROR] No callback registered for on_data_point_received!");
         }
-      }));
+      });
     }
   }, timeout*1000); // Timeout is passed in Milliseconds
 }
