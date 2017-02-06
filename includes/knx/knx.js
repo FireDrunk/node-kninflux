@@ -38,17 +38,22 @@ exports.register_environment = function(environment) {
   for (var i = 0; i < environment.devices.length; i++) {
     if (DEBUG) console.log("[DEBUG] Creating Datapoint for (%j, %j, %j)", environment.devices[i].name, environment.devices[i].address,environment.devices[i].dpt );
 
-    var device = new knx.Datapoint({ga: environment.devices[i].address, dpt: environment.devices[i].dpt});
-    device.bind(connection);
-    datapoints[environment.devices[i].name] = device;
+    var knx_datapoint = new knx.Datapoint({ga: environment.devices[i].address, dpt: environment.devices[i].dpt}, connection);
+    var datapoint = {
+      name: environment.devices[i].name,
+      datapoint: knx_datapoint
+    }
+    datapoints.push(datapoint);
   }
 }
 
 exports.start_reading = function(timeout) {
   var timer = setInterval(function() {
-    for(name in Object.keys(datapoints)) {
-      if (DEBUG) console.log("[DEBUG] Retrieving value for: %j", name);
-      datapoints[name].read( (name,src,value => {
+    for(var i = 0; i < datapoints.length; i++) {
+      var datapoint = datapoints[i];
+      if (DEBUG) console.log("[DEBUG] Retrieving value for: %j", datapoint.name);
+
+      datapoints[i].datapoint.read( (datapoint.name,src,value => {
         if ("on_data_point_received" in callbacks) {
           callbacks["on_data_point_received"](name, src, value);
         }
