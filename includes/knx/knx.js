@@ -41,6 +41,7 @@ exports.register_environment = function(environment) {
     var knx_datapoint = new knx.Datapoint({ga: environment.devices[i].address, dpt: environment.devices[i].dpt}, connection);
     var datapoint = {
       name: environment.devices[i].name,
+      address: envrionment.devices[i].address,
       datapoint: knx_datapoint
     }
     datapoints.push(datapoint);
@@ -53,10 +54,15 @@ exports.start_reading = function(timeout) {
       var datapoint = datapoints[i];
       datapoints[i].datapoint.read( (src,value, ga) => {
         if ("on_data_point_received" in callbacks) {
-          callbacks["on_data_point_received"](name, value, ga);
+          for (var i = 0; i < datapoints.length; i++) {
+            if (datapoints[i].address == ga) {
+              callbacks["on_data_point_received"](datapoints[i].name, value, src);
+            }
+          }
+          console.error("[ERROR] No registered sensor found for response!");
         }
         else {
-          console.log("[ERROR] No callback registered for on_data_point_received!");
+          console.error("[ERROR] No callback registered for on_data_point_received!");
         }
       });
     }
