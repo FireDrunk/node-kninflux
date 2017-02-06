@@ -37,21 +37,21 @@ exports.register_environment = function(environment) {
   for (var i = 0; i < environment.devices.length; i++) {
     var device = new knx.Datapoint({ga: environment.devices[i].address, dpt: environment.devices[i].dpt});
     device.bind(connection);
-    datapoints.push(device);
+    datapoints[environment.devices[i].name = device;
   }
 }
 
 exports.start_reading = function(timeout) {
-    var timer = setInterval(function() {
-      for (var i = 0; i < datapoints.length; i++) {
-        datapoints[i].read( (src, value) =>{
-          if ("on_data_point_received" in callbacks) {
-            callbacks["on_data_point_received"]("test_name", src, value);
-          }
-          else {
-            console.log("[ERROR] No callback registered for on_data_point_received!");
-          }
-        });
-      }
-    }, timeout*1000); // Timeout is passed in Milliseconds
+  var timer = setInterval(function() {
+    for(name in Object.keys(datapoints)) {
+      datapoints[name].read( (name,src,value => {
+        if ("on_data_point_received" in callbacks) {
+          callbacks["on_data_point_received"](name, src, value);
+        }
+        else {
+          console.log("[ERROR] No callback registered for on_data_point_received!");
+        }
+      }));
+    }
+  }, timeout*1000); // Timeout is passed in Milliseconds
 }
