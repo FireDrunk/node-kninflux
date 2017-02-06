@@ -51,11 +51,15 @@ exports.start_reading = function(timeout) {
   var timer = setInterval(function() {
     for(var i = 0; i < datapoints.length; i++) {
       var datapoint = datapoints[i];
-      if (DEBUG) console.log("[DEBUG] Retrieving value for: %j", datapoint.name);
-
       datapoints[i].datapoint.read( (src,value) => {
         if ("on_data_point_received" in callbacks) {
-          callbacks["on_data_point_received"](datapoint.name, src, value);
+          //We need to search for the name, because we are inside an anonymous function that gets called Async.
+          for(var i = 0; i < datapoints.length; i++) {
+            if (datapoints[i].address = src) {
+              callbacks["on_data_point_received"](datapoints[i].name, src, value);
+              return; // Stop processing after calling the callback
+            }
+          }
         }
         else {
           console.log("[ERROR] No callback registered for on_data_point_received!");
