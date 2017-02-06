@@ -57,6 +57,7 @@ exports.start_reading = function(timeout) {
           for (var i = 0; i < datapoints.length; i++) {
             if (datapoints[i].address == ga) {
               callbacks["on_data_point_received"](datapoints[i].name, ga, value);
+              return; // Stop processing
             }
           }
           console.error("[ERROR] No registered sensor found for response!");
