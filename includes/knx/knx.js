@@ -35,6 +35,8 @@ exports.register_callback = function(name, func) {
 
 exports.register_environment = function(environment) {
   for (var i = 0; i < environment.devices.length; i++) {
+    if (DEBUG) console.log("[DEBUG] Creating Datapoint for (%j, %j, %j)", environment.devices[i].name, environment.devices[i].address,environment.devices[i].dpt );
+
     var device = new knx.Datapoint({ga: environment.devices[i].address, dpt: environment.devices[i].dpt});
     device.bind(connection);
     datapoints[environment.devices[i].name] = device;
