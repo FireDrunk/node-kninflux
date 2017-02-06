@@ -1,4 +1,5 @@
 // Globals
+const DEBUG = true;
 var callbacks = [];
 var datapoints = [];
 
