@@ -51,22 +51,22 @@ exports.register_environment = function(environment) {
 exports.start_reading = function(timeout) {
   var timer = setInterval(function() {
     for(var i = 0; i < datapoints.length; i++) {
-      var datapoint = datapoints[i];
-      datapoints[i].datapoint.read( (src, value, ga) => {
-        if ("on_data_point_received" in callbacks) {
-          for (var i = 0; i < datapoints.length; i++) {
-            if (datapoints[i].address == ga) {
-              callbacks["on_data_point_received"](datapoints[i].name, ga, value);
-              return; // Stop processing
-            }
-          }
-          console.error("[ERROR] No registered sensor found for response!");
-        }
-        else {
-          console.error("[ERROR] No callback registered for on_data_point_received!");
+      var closure = on_data_point_value_received.bind(datapoints[i].datapoint);
+      datapoints[i].datapoint.read();
         }
       });
       if (DEBUG) console.log("[DEBUG] Started read for %j", datapoint.name);
     }
   }, timeout*1000); // Timeout is passed in Milliseconds
+}
+
+function on_data_point_value_received(src, value) {
+  if (DEBUG) console.log("[DEBUG] Data point received (%j, %j, %j)", this.options.ga, src, value);
+  // if ("on_data_point_received" in callbacks) {
+  //   //callbacks["on_data_point_received"]("Test", this.options.ga, value);
+  //   return; // Stop processing
+  // }
+  // else {
+  //   console.error("[ERROR] No callback registered for on_data_point_received!");
+  // }
 }
