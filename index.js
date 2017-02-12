@@ -28,7 +28,7 @@ var environment = JSON.parse(fs.readFileSync('environment.json', 'utf8'));
 if (DEBUG) console.log("[DEBUG] Environment: %j", environment);
 
 // Events
-function on_knx_data_point_received(ga, value) {
+function on_knx_data_point_received(name, ga, value) {
   if (DEBUG) console.log("[DEBUG] KNX Data point received, (%j, %j, %j)", name, ga, value);
 
   //TODO: Rework promise return

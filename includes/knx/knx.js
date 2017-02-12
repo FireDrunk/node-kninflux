@@ -74,7 +74,7 @@ exports.start_reading = function(timeout) {
 }
 
 function on_data_point_value_received(src, value) {
-  if (DEBUG) console.log("[DEBUG] Data point received (%j, %j, %j)", this.options.ga, src, value);
+  if (DEBUG) console.log("[DEBUG] Data point received (%j, %j, %j)", this.datapoint.options.ga, src, value);
 
   //Callback
   if ("on_data_point_received" in callbacks && typeof callbacks["on_data_point_received"] === 'function') {
