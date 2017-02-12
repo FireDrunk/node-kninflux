@@ -1,0 +1,21 @@
+{
+  "name": "Home",
+  "devices":
+  [
+    {
+      "name": "Sensor 1",
+      "address": "2/2/2",
+      "dpt": "DPST-9-1"
+    },
+    {
+      "name": "Sensor 2",
+      "address": "2/2/3",
+      "dpt": "DPST-9-1"
+    },
+    {
+      "name": "Sensor 3",
+      "address": "2/2/4",
+      "dpt": "DPST-9-1"
+    }
+  ]
+}

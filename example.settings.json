@@ -1,0 +1,10 @@
+{
+  "interval":               "30",
+  "influx_db_host":         "127.0.0.1",
+  "influx_db_port":         "8086",
+  "influx_db_name":         "knx_db",
+  "influx_db_table_name":   "knx_values",
+  "knx_gateway":            "127.0.0.1",
+  "knx_port":               "3671",
+  "knx_physical_address":   "1/1/1",
+}
