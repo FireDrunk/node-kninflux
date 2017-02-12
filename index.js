@@ -19,8 +19,7 @@ try {
   if (DEBUG) console.log("[DEBUG] Settings: %j", global_settings);
 }
 catch (err) {
-  console.error("[ERROR] Error parsing settings.json!");
-  console.error(err);
+  console.error("[ERROR] Error parsing settings.json! Error was: %j", err);
   process.exit(1);
 }
 
@@ -29,7 +28,7 @@ var environment = JSON.parse(fs.readFileSync('environment.json', 'utf8'));
 if (DEBUG) console.log("[DEBUG] Environment: %j", environment);
 
 // Events
-function on_knx_data_point_received(name, ga, value) {
+function on_knx_data_point_received(ga, value) {
   if (DEBUG) console.log("[DEBUG] KNX Data point received, (%j, %j, %j)", name, ga, value);
 
   //TODO: Rework promise return

@@ -60,7 +60,7 @@ exports.connect = function(settings) {
       }
 
       // Call callback
-      if ("on_connected" in callbacks) {
+      if ("on_connected" in callbacks && typeof callbacks["on_connected"] === 'function') {
         callbacks["on_connected"]();
       }
       else {

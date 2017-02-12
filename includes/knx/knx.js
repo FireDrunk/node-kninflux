@@ -1,7 +1,7 @@
 // Globals
 const DEBUG = true;
 var callbacks = [];
-var datapoints = [];
+var devices = [];
 
 // Module Requires
 var knx = require('knx');
@@ -35,36 +35,52 @@ exports.register_callback = function(name, func) {
 }
 
 exports.register_environment = function(environment) {
-  for (var i = 0; i < environment.devices.length; i++) {
-    if (DEBUG) console.log("[DEBUG] Creating Datapoint for (%j, %j, %j)", environment.devices[i].name, environment.devices[i].address,environment.devices[i].dpt );
+  try {
+    // Loop through all devices in the environment
+    for (var i = 0; i < environment.devices.length; i++) {
+      if (DEBUG) console.log("[DEBUG] Creating Datapoint for (%j, %j, %j)", environment.devices[i].name, environment.devices[i].address,environment.devices[i].dpt );
 
-    var knx_datapoint = new knx.Datapoint({ga: environment.devices[i].address, dpt: environment.devices[i].dpt}, connection);
-    var datapoint = {
-      name: environment.devices[i].name,
-      address: environment.devices[i].address,
-      datapoint: knx_datapoint
+      //Create the KNX Datapoint Object
+      var knx_datapoint = new knx.Datapoint(
+      {
+        ga: environment.devices[i].address,
+        dpt: environment.devices[i].dpt
+      }, connection);
+
+      // Device wrapper class to provide the Friendly Name of the sensor/device
+      var device = {
+        name: environment.devices[i].name,
+        datapoint: knx_datapoint
+      }
+
+      //Add sensor to global array
+      devices.push(device);
     }
-    datapoints.push(datapoint);
+  }
+  catch (err) {
+    console.error("[ERROR] Error creating KNX DataPoint entry. Error was: ", %j);
+    process.exit(1);
   }
 }
 
 exports.start_reading = function(timeout) {
   var timer = setInterval(function() {
-    for(var i = 0; i < datapoints.length; i++) {
-      var closure = on_data_point_value_received.bind(datapoints[i].datapoint);
-      datapoints[i].datapoint.read(closure);
-      if (DEBUG) console.log("[DEBUG] Started read for %j", datapoints[i].name);
+    for(var i = 0; i < devices.length; i++) {
+      var closure = on_data_point_value_received.bind(devices[i]);
+      devices[i].datapoint.read(closure);
+      if (DEBUG) console.log("[DEBUG] Started read for (%j, %j)", devices[i].name, devices[i].datapoint.options.ga);
     }
   }, timeout*1000); // Timeout is passed in Milliseconds
 }
 
 function on_data_point_value_received(src, value) {
   if (DEBUG) console.log("[DEBUG] Data point received (%j, %j, %j)", this.options.ga, src, value);
-  // if ("on_data_point_received" in callbacks) {
-  //   //callbacks["on_data_point_received"]("Test", this.options.ga, value);
-  //   return; // Stop processing
-  // }
-  // else {
-  //   console.error("[ERROR] No callback registered for on_data_point_received!");
-  // }
+
+  //Callback
+  if ("on_data_point_received" in callbacks && typeof callbacks["on_data_point_received"] === 'function') {
+    callbacks["on_data_point_received"](this.name, this.datapoint.options.ga, value);
+  }
+  else {
+    console.error("[ERROR] No callback registered for on_data_point_received!");
+  }
 }
