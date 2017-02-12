@@ -58,7 +58,7 @@ exports.register_environment = function(environment) {
     }
   }
   catch (err) {
-    console.error("[ERROR] Error creating KNX DataPoint entry. Error was: ", %j);
+    console.error("[ERROR] Error creating KNX DataPoint entry. Error was: ", err);
     process.exit(1);
   }
 }
