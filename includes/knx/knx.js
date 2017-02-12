@@ -53,7 +53,7 @@ exports.start_reading = function(timeout) {
     for(var i = 0; i < datapoints.length; i++) {
       var closure = on_data_point_value_received.bind(datapoints[i].datapoint);
       datapoints[i].datapoint.read(closure);
-      if (DEBUG) console.log("[DEBUG] Started read for %j", datapoint.name);
+      if (DEBUG) console.log("[DEBUG] Started read for %j", datapoints[i].datapoint.name);
     }
   }, timeout*1000); // Timeout is passed in Milliseconds
 }
