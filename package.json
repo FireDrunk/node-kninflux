@@ -1,13 +1,13 @@
 {
-  "name": "knxproject",
+  "name": "node-kninflux",
   "version": "1.0.0",
-  "description": "My KNX Project",
+  "description": "Write KNX values to Influx.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "Thijs Cramer <thijs.cramer@gmail.com>",
+  "license": "GPL",
   "dependencies": {
     "influx": "^5.0.0-alpha.4",
     "knx": "^2.0.3",
