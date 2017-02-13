@@ -11,7 +11,7 @@ __PLEASE BE AWARE, IF YOU ARE USING AN EXISTING DATABSE. IT WILL NOT ASK FOR ANY
 Table is designed as:
 *knx_address*, *knx_value*. Timestamp is automatically added by influxdb, and the record is *tagged* with the sensor name set in environment.json. You can easily filter by-tag in Influx's Query Language.
 
-#### Basic Usage:%
+#### Basic Usage:
 Download a release zip and extract it somewhere (or clone the repository).
 copy example.settings.json to settings.json and change all settings accordingly.
 copy example.environment.json to environment.json and replace the test data with your own sensors.
