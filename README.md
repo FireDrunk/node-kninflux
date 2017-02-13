@@ -16,8 +16,13 @@ Download a release zip and extract it somewhere (or clone the repository).
 copy example.settings.json to settings.json and change all settings accordingly.
 copy example.environment.json to environment.json and replace the test data with your own sensors.
 
+Requirements:
+- NodeJS
+
 To run the application, execute:
 ```bash
+cd [release_directory]
+npm install
 node index.js
 ```
 #### Extra (for graphical view):
