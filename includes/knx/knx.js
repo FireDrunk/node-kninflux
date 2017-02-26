@@ -64,10 +64,9 @@ exports.register_environment = function(environment) {
 }
 
 exports.start_reading = function(timeout) {
-  var timer = setInterval(function() {
+  setInterval(function() {
     for(var i = 0; i < devices.length; i++) {
-      var closure = on_data_point_value_received.bind(devices[i]);
-      devices[i].datapoint.read(closure);
+      devices[i].datapoint.read(on_data_point_value_received.bind(devices[i]));
       if (DEBUG) console.log("[DEBUG] Started read for (%j, %j)", devices[i].name, devices[i].datapoint.options.ga);
     }
   }, timeout*1000); // Timeout is passed in Milliseconds
